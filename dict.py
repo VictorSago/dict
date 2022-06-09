@@ -40,25 +40,28 @@ def save_dict(conn):
     cur.close()
 
 
-print("Welcome to the dictionary!")
-print("Available commands are 'list', 'add', 'delete' and 'quit'")
-while True: ## REPL - Read Execute Program Loop
-    cmd = input("Command: ")
-    if cmd == "list":
-        print("Listing the dictionary:")
-        print(read_dict(conn))
-    elif cmd == "add":
-        word = input("  Word: ")
-        trans = input("  Translation: ")
-        add_word(conn, word, trans)
-        print(f" Added word {word}")
-    elif cmd == "delete":
-        ID = input("  ID: ")
-        delete_word(conn, ID)
-        print(f" Deleted the word with ID {ID}")
-    elif cmd == "quit":
-        print("Saving the changes.")
-        save_dict(conn)
-        break
+def main():
+    print("Welcome to the dictionary!")
+    print("Available commands are 'list', 'add', 'delete' and 'quit'")
+    while True: ## REPL - Read Execute Program Loop
+        cmd = input("Command: ")
+        if cmd == "list":
+            print("Listing the dictionary:")
+            print(read_dict(conn))
+        elif cmd == "add":
+            word = input("  Word: ")
+            trans = input("  Translation: ")
+            add_word(conn, word, trans)
+            print(f" Added word {word}")
+        elif cmd == "delete":
+            ID = input("  ID: ")
+            delete_word(conn, ID)
+            print(f" Deleted the word with ID {ID}")
+        elif cmd == "quit":
+            print("Saving the changes.")
+            save_dict(conn)
+            break
 
-print("-----Goodbye!-----")
+    print("-----Goodbye!-----")
+
+main()
