@@ -25,6 +25,9 @@ def save_dict(C):
     cur.execute("COMMIT;")
     cur.close()
 
+
+print("Welcome to the dictionary!")
+print("Available commands are 'list', 'add', 'delete' and 'quit'")
 while True: ## REPL - Read Execute Program Loop
     cmd = input("Command: ")
     if cmd == "list":
