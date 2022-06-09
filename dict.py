@@ -8,8 +8,8 @@ conn = psycopg2.connect(
 
 # read_dict: returns the list of all dictionary entries:
 #   argument: C - the database connection
-def read_dict(C):
-    cur = C.cursor()
+def read_dict(conn):
+    cur = conn.cursor()
     cur.execute("SELECT id, word, translation FROM dictionary;")
     rows = cur.fetchall()
     cur.close()
@@ -19,23 +19,23 @@ def read_dict(C):
 #   argument: C - the database connection
 #   argument: word - the English word to be added to the listz
 #   argument: translation - translation of the word into Swedish
-def add_word(C, word, translation):
-    cur = C.cursor()
+def add_word(conn, word, translation):
+    cur = conn.cursor()
     cur.execute(f"INSERT INTO dictionary (word, translation) VALUES ('{word}', '{translation}');")
     cur.close()
 
 # delete_word: removes a word from the list
 #   argument: C - the database connection
 #   argument: ID - the database ID of the word to be removed 
-def delete_word(C, ID):
-    cur = C.cursor()
+def delete_word(conn, ID):
+    cur = conn.cursor()
     cur.execute(f"DELETE FROM dictionary WHERE id = '{ID}';")
     cur.close()
 
 # save_dict: commits all changes to the database
 #   argument: C - the database connection
-def save_dict(C):
-    cur = C.cursor()
+def save_dict(conn):
+    cur = conn.cursor()
     cur.execute("COMMIT;")
     cur.close()
 
@@ -57,6 +57,8 @@ while True: ## REPL - Read Execute Program Loop
         delete_word(conn, ID)
         print(f" Deleted the word with ID {ID}")
     elif cmd == "quit":
-        print("Saving dictionary")
+        print("Saving the changes.")
         save_dict(conn)
-        exit()
+        break
+
+print("-----Goodbye!-----")
